@@ -6,14 +6,15 @@
 # This work based on jQuery-File-Upload which can be found at https://github.com/blueimp/jQuery-File-Upload/
 
 import os
-import PIL
-from PIL import Image
+#import PIL
+#from PIL 
+import image
 import simplejson
 import traceback
 
 from flask import Flask, request, render_template, redirect, url_for, send_from_directory
 from flask_bootstrap import Bootstrap
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 
 from lib.upload_file import uploadfile
 
@@ -52,16 +53,16 @@ def gen_file_name(filename):
 def create_thumbnail(image):
     try:
         base_width = 80
-        img = Image.open(os.path.join(app.config['UPLOAD_FOLDER'], image))
+        img = image.open(os.path.join(app.config['UPLOAD_FOLDER'], image))
         w_percent = (base_width / float(img.size[0]))
         h_size = int((float(img.size[1]) * float(w_percent)))
-        img = img.resize((base_width, h_size), PIL.Image.ANTIALIAS)
+        img = img.resize((base_width, h_size), image.ANTIALIAS)
         img.save(os.path.join(app.config['THUMBNAIL_FOLDER'], image))
 
         return True
 
     except:
-        print traceback.format_exc()
+        print (traceback.format_exc())
         return False
 
 
